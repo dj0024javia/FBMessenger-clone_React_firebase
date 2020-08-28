@@ -1,0 +1,19 @@
+.message {
+    padding: 1px;
+    margin: 10px;
+    width: fit-content;
+}
+
+.message__user {
+    margin-left: auto;
+    text-align: left !important;
+    color: white;
+}
+
+.message__userclass {
+    background-color: dodgerblue !important;
+}
+
+.message__defaultclass {
+    background-color: rgb(224, 223, 223) !important;
+}

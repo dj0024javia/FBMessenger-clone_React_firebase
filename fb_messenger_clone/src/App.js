@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Button from '@material-ui/core/Button'
-import { TextField, FormControl, InputLabel, Input, FormHelperText } from '@material-ui/core';
+import { FormControl, InputLabel, Input } from '@material-ui/core';
 import Message from './Message';
+
 
 function App() {
   const [input, setInput] = useState('')
@@ -54,7 +55,7 @@ function App() {
       
       {
         allmessages.map(eachMessage => 
-          <Message text={eachMessage.allmessages} uid={eachMessage.username}/>
+          <Message object={eachMessage} username={username}/>
           )
       }
 
