@@ -11,7 +11,7 @@ function Message({object, username}) {
             <Card className={isUser ? "message__userclass" : "message__defaultclass"}>
                 <CardContent>
                     <Typography variant="h6" component='h2' color='white'>
-                        {object.username}: {object.allmessages}
+                        {object.username}: {object.message}
                     </Typography>
                 </CardContent>
             </Card>

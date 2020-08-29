@@ -3,24 +3,38 @@ import './App.css';
 import Button from '@material-ui/core/Button'
 import { FormControl, InputLabel, Input } from '@material-ui/core';
 import Message from './Message';
+import { db } from './firebase';
+import firebase from 'firebase'
 
 
 function App() {
   const [input, setInput] = useState('')
-  const [allmessages, setAllMessages] = useState([
-    {username :'abc', allmessages :'This is my default message'},
-    {username :'XYZ', allmessages :'XYZmessage'}
-      ])
+  const [msgs, setMsgs] = useState([])
   const [username, setUsername] = useState('')
 
   const sendMessage = (event => {
     event.preventDefault();
-    setAllMessages(
-      [...allmessages, {username: username, allmessages: input}
-        ]
-      );
+
+    db.collection('fb-messenger-clone').add({
+      username: username,
+      message: input,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
     setInput('');
   })
+
+  // Below useEffect runs only when the page refresh/loads(syntax -->> useEffect(function, dependency)). 
+  // So here dependency is []. If we put input, so whenever input variable changes, it runs this code.
+  useEffect(() => {
+    db.collection('fb-messenger-clone').orderBy('timestamp','desc').onSnapshot(snapshot => {
+      
+      setMsgs(snapshot.docs.map(doc => doc.data())
+      )
+    })
+
+    console.log(msgs)
+  }
+  , [])
 
   useEffect(() => {
     setUsername(prompt('What is Your Name??'))
@@ -54,7 +68,7 @@ function App() {
       {/* 3. Message Incoming and Outgoing. */}
       
       {
-        allmessages.map(eachMessage => 
+        msgs.map(eachMessage => 
           <Message object={eachMessage} username={username}/>
           )
       }
